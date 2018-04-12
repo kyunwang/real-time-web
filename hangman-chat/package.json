@@ -1,0 +1,38 @@
+{
+	"name": "hangman-chat",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon --exec babel-node ./server/index.js",
+		"watch": "npm run watch:css & npm run watch:js & npm start",
+		"watch:css": "node-sass --watch src/styles --output public/",
+		"watch:js": "watchify src/scripts/index.js --outfile public/scripts/bundle.js",
+		"build": "browserify src/scripts/index.js > dist/bundle.js && uglifyjs dist/bundle.js --compress --output dist/bundle.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Kang Yun Wang(Kevin Wang)",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"dotenv": "^5.0.1",
+		"express": "^4.16.3",
+		"pug": "^2.0.3",
+		"socket.io": "^2.1.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"browserify": "^16.1.1",
+		"node-sass": "^4.8.3",
+		"nodemon": "^1.17.3",
+		"uglifyjs": "^2.4.11",
+		"watchify": "^3.11.0"
+	},
+	"babel": {
+		"presets": [
+			"env"
+		]
+	}
+}
