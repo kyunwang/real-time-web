@@ -13,11 +13,11 @@ exports.createNode = function (element = 'li', text = '') {
 	return node;
 }
 
-exports.searchLetter = (word, letter) => {
+exports.searchLetter = (array, letter) => {
 	const locations = [];
 
-	for (let index = 0; index < word.length; index++) {
-		if (word[index] === letter) locations.push(index);
+	for (let index = 0; index < array.length; index++) {
+		if (array[index] === letter) locations.push(index);
 	}
 
 	return locations;

@@ -46,7 +46,7 @@ form button {
 .word--con {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 3em; }
+  margin: 1.2em 3em; }
   .word--con p {
     position: relative;
     flex: 1;
