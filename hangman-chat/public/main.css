@@ -1,10 +1,14 @@
+:root {
+  --main-black: #3a3a3a; }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box; }
 
 body {
-  font: 13px Helvetica, Arial; }
+  font: 13px Helvetica, Arial;
+  color: var(--main-black); }
 
 form {
   background: #000;
@@ -40,6 +44,15 @@ form button {
 === The word to guess styling
 ===========================*/
 .word--con {
-  display: flex; }
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 3em; }
   .word--con p {
-    font-size: 1.2em; }
+    position: relative;
+    flex: 1;
+    font-size: 3em;
+    text-align: center; }
+  .word--con span {
+    position: relative;
+    margin: 0 .2em;
+    min-width: 1em; }

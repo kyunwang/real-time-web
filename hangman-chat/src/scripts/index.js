@@ -31,11 +31,13 @@ const createNode = h.createNode;
 		}
 	}
 
+
+
 	const chatSockets = {
 		init: function() {
 			hangmanSocket.init();
 
-			socket.emit('get word');
+			socket.emit('set word');
 			
 			socket.on('new message', msg => {
 				chat.addMessage(msg);
@@ -45,33 +47,39 @@ const createNode = h.createNode;
 				chat.addMessage(msg);
 			});
 
-			socket.on('guess_letter', letter => {
-				console.log('guess', letter);
-			});
+			socket.on('guess_letter', hangmanSocket.handleGuess);
 			
-			socket.on('guess_word', word => {
-				console.log('guess', word);
-				
-			});
+			socket.on('guess_word', hangmanSocket.handleGuess);
 		}
 	}
+
+
 
 	const hangmanSocket = {
 		init: function() {
 			// Get the word from the server and set it in the client
-			socket.on('get word', (word, hiddenWord) => {
-				console.log(word, hiddenWord);
+			socket.on('set word', (word, hiddenWord) => {
 				const wordCon = $('#word');
-				const spaces = hiddenWord.forEach(letter => {
+				
+				// Remove current nodes for now to update
+				while (wordCon.hasChildNodes()) {
+					wordCon.removeChild(wordCon.lastChild);
+			  	}
+
+				// Render the (new)letter to the view
+				hiddenWord.forEach(letter => {
 					const space = createNode('span', letter);
-					console.log(wordCon, space);
 					wordCon.appendChild(space);
 				});
-				
-
-				// $('#word').textContent = word;
 			});
 		},
+		handleGuess: function(guess) {
+			if (guess.correct) {
+				chat.addMessage(guess.result);
+			} else {
+				chat.addMessage(guess.result);
+			}
+		}
 
 	}
 

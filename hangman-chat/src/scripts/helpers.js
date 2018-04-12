@@ -12,3 +12,13 @@ exports.createNode = function (element = 'li', text = '') {
 	node.appendChild(textNode);
 	return node;
 }
+
+exports.searchLetter = (word, letter) => {
+	const locations = [];
+
+	for (let index = 0; index < word.length; index++) {
+		if (word[index] === letter) locations.push(index);
+	}
+
+	return locations;
+}

@@ -2,6 +2,9 @@ require('dotenv').config({ path: './vars.env' });
 
 import app from './app';
 
+import h from '../src/scripts/helpers';
+
+
 const server = app.listen(process.env.PORT, function () {
 	console.log('Listening to port: ', process.env.PORT);
 });
@@ -10,7 +13,7 @@ const hangmanLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-const hangmanWord = 'wonderful';
+const hangmanWord = 'wonderfull';
 // Create a array for the hangman game
 const wordUnderscores = hangmanWord.split('').map(letter => '_');
 
@@ -28,7 +31,7 @@ io.on('connection', function (socket) {
 	// When a user posts a new message
 	socket.on('new message', checkHangman);
 
-	socket.on('get word', getWord);
+	socket.on('get word', setWord);
 });
 
 
@@ -57,6 +60,7 @@ function checkType(msg) {
 		} else {
 			const letter = message[1][0];
 			const result = checkLetter(letter);
+
 			console.log('letter', result);
 			io.emit('guess_letter', result);
 		}
@@ -65,27 +69,46 @@ function checkType(msg) {
 	}
 
 	// Give a error saying that a word has to be passed in 
-	return;
+	// return;
 }
 
 
 
-function getWord() {
-	io.emit('get word', hangmanWord, wordUnderscores);
+function setWord() {
+	io.emit('set word', hangmanWord, wordUnderscores);
 }
 
 function checkLetter(letter) {
-	if (hangmanWord.indexOf(letter) > -1) {
-		console.log('found letter');
-		return letter;
+	const letterIndexes = h.searchLetter(hangmanWord, letter);
+	
+	if (letterIndexes.length) {
+		letterIndexes.forEach(index => wordUnderscores[index] = letter);
+
+
+		setWord();
+
+		return {
+			correct: true,
+			result: letter
+		};
 	}
-	return `There is no letter: ${letter} in the word.`;
+	return {
+		correct: false,
+		result: `There is no letter: ${letter} in the word.`
+	};
 }
 
 function checkWord(word) {
 	if (hangmanWord === word) {
 		console.log('found word');
-		return word;
+		return {
+			correct: true,
+			result: word
+		};
 	}
-	return `Your guess of: ${word} is not correct.`;
+	return {
+		correct: false,
+		result: `Your guess of: ${word} is not correct.`,
+	}
 }
+
