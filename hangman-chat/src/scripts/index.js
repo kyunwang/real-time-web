@@ -32,6 +32,9 @@ const $ = h.$;
 			const message = document.createTextNode(msg);
 			node.appendChild(message);
 			return node;
+		},
+		userEntered: function() {
+
 		}
 	}
 
@@ -45,11 +48,18 @@ const $ = h.$;
 				chat.addMessage(msg);
 			});
 
+
+			socket.on('new user', function (msg) {
+				chat.addMessage(msg);
+			});
+
+
 		}
 	}
 
 	const hangmanSocket = {
 		init: function() {
+			// Get the word from the server and set it in the client
 			socket.on('get word', function(word) {
 				console.log(word);
 				$('#word').textContent = word;
