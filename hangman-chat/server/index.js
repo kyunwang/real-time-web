@@ -9,7 +9,7 @@ const server = app.listen(process.env.PORT, function () {
 	console.log('Listening to port: ', process.env.PORT);
 });
 
-const hangmanLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+const hangmanAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -32,6 +32,7 @@ io.on('connection', function (socket) {
 	socket.on('new_message', checkHangman);
 
 	socket.on('set_word', setWord);
+	socket.on('set_letter_board', setLetterBoard);
 });
 
 
@@ -69,11 +70,22 @@ function checkType(msg) {
 
 
 function setWord() {
-	io.emit('set_word', hangmanWord, wordUnderscores);
+	io.emit('set_word', wordUnderscores);
 }
+
+function setLetterBoard() {
+	io.emit('set_letter_board', hangmanAlphabet);
+}
+
 
 function checkLetter(letter) {
 	const letterIndexes = h.searchLetter(hangmanWord, letter);
+	// const alphabetIndex = h.searchLetter(hangmanAlphabet, letter);
+	const alphabetIndex = hangmanAlphabet.indexOf(letter);
+	hangmanAlphabet.splice(alphabetIndex, 1);
+
+	// Update the letterboard
+	setLetterBoard();
 	
 	if (letterIndexes.length) {
 		letterIndexes.forEach(index => wordUnderscores[index] = letter);
@@ -86,6 +98,7 @@ function checkLetter(letter) {
 			result: letter
 		};
 	}
+
 	return {
 		correct: false,
 		result: `There is no letter: ${letter} in the word.`
@@ -96,6 +109,7 @@ function checkWord(word) {
 	if (hangmanWord === word) {
 		wordUnderscores = word.split('');
 
+		// Update the letters
 		setWord();
 
 		return {

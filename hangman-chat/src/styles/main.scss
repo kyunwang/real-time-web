@@ -1,5 +1,8 @@
 :root {
 	--main-black: #3a3a3a;
+	--grey: #c0c0c0;
+	--fbg-color: #fff;
+	--bg-color: #0F31C9;
 }
 
 * {
@@ -16,7 +19,7 @@ body {
 form {
     background: #000;
     padding: 3px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
 }
@@ -50,24 +53,62 @@ form button {
 }
 
 /*==========================
+=== 
+===========================*/
+
+html,
+body {
+	display: flex;
+	background-color: var(--bg-color);
+	height: 100%;
+	position: relative;
+	padding: .6rem;
+	> main {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		background-color: var(--fbg-color);
+	}
+}
+
+
+
+/*==========================
 === The word to guess styling
 ===========================*/
 
-.word--con {
+.word--con,
+.letter--con {
 	display: flex;
+	justify-content: center;
 	flex-wrap: wrap;
-	margin: 1.2em 3em;
+	padding: 1.2rem 2.4rem;
 
-	p {
-		position: relative;
-		flex: 1;
-		font-size: 3em;
-		text-align: center;
+	span {
+		min-width: 1.2em;
 	}
+}
+
+.word--con {
+	position: relative;
+	flex: 1;
+	font-size: 3em;
+	text-align: center;
 
 	span {
 		position: relative;
 		margin: 0 .2em;
-		min-width: 1em;
+	}
+}
+
+.letter--con {
+	font-size: 1.5em;
+	font-weight: 900;
+	text-transform: uppercase;
+	
+	span {
+		margin: .2em 1em;
+		color: var(--grey);
+		text-align: center;
 	}
 }

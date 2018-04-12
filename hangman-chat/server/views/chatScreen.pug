@@ -1,13 +1,19 @@
 extends layout
 include mixins/_hangmanWords
+include mixins/_letterBoard
 
 block content
-	+hangmanWords(hmWord)
-	ul#messages
+	main
+		section
+			+letterBoard()
+			+hangmanWords()
 
-	form(id="chat-form", action="")
-		input(id="m", autocomplete="on")
-		button Send
+		section
+			ul#messages
+
+			form(id="chat-form", action="")
+				input(id="m", autocomplete="on")
+				button Send
 
 	script(type="text/javascript", src="/socket.io/socket.io.js")
 	script(type="text/javascript", src="/scripts/bundle.js")

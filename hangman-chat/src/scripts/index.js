@@ -38,6 +38,7 @@ const createNode = h.createNode;
 			hangmanSocket.init();
 
 			socket.emit('set_word');
+			socket.emit('set_letter_board');
 			
 			socket.on('new_message', chat.addMessage);
 
@@ -57,13 +58,13 @@ const createNode = h.createNode;
 			socket.on('set_word', hangmanSocket.setWord);
 			socket.on('set_letter_board', hangmanSocket.setLetterBoard);
 		},
-		setWord: function(word, hiddenWord) {
-			const wordCon = $('#word');
+		setWord: function(hiddenWord) {
+			const wordCon = $('#word--con');
 			
 			// Remove current nodes for now to update
 			while (wordCon.hasChildNodes()) {
 				wordCon.removeChild(wordCon.lastChild);
-			  }
+			}
 
 			// Render the (new)letter to the view
 			hiddenWord.forEach(letter => {
@@ -71,8 +72,21 @@ const createNode = h.createNode;
 				wordCon.appendChild(space);
 			});
 		},
-		setLetterBoard: function() {
+		setLetterBoard: function(alphabet) {
+			const letterCon = $('#letter--con');
+			
+			// Remove current nodes for now to update
+			while (letterCon.hasChildNodes()) {
+				letterCon.removeChild(letterCon.lastChild);
+			}
 
+			// Render the (new)letter to the view
+			alphabet.forEach(letter => {
+				const space = createNode('span', letter);
+				// console.log(space);
+				
+				letterCon.appendChild(space);
+			});
 		},
 		handleGuess: function(guess) {
 			if (guess.correct) {
