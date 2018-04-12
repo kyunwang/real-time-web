@@ -46,15 +46,19 @@ function checkType(msg) {
 
 	if (message.length > 1) {
 		const firstWord = message[1].toLowerCase();
+		console.log('checking msg');
 		
 		if (firstWord === 'word' && message.length > 2) {
 			const word = message[2];
 			const result = checkWord(word);
-			io.emit('new message', result);
+			console.log('word', result);
+			
+			io.emit('guess_word', result);
 		} else {
 			const letter = message[1][0];
 			const result = checkLetter(letter);
-			io.emit('new message', result);
+			console.log('letter', result);
+			io.emit('guess_letter', result);
 		}
 		
 		return;
@@ -67,7 +71,7 @@ function checkType(msg) {
 
 
 function getWord() {
-	io.emit('get word', hangmanWord);
+	io.emit('get word', hangmanWord, wordUnderscores);
 }
 
 function checkLetter(letter) {
