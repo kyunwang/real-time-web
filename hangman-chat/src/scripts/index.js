@@ -12,7 +12,7 @@ const createNode = h.createNode;
 
 			// Add a submit event to the submit button
 			$('#chat-form').addEventListener('submit', evt => {
-				socket.emit('new message', $('#m').value);
+				socket.emit('new_message', $('#m').value);
 				
 				$('#m').value = '';
 				evt.preventDefault();
@@ -22,7 +22,7 @@ const createNode = h.createNode;
 			chatSockets.init();
 		},
 		addMessage: function (msg) {
-			// Append the new message to the view
+			// Append the new_message to the view
 			$('#messages')
 				.appendChild(createNode('li', msg));
 		},
@@ -37,13 +37,13 @@ const createNode = h.createNode;
 		init: function() {
 			hangmanSocket.init();
 
-			socket.emit('set word');
+			socket.emit('set_word');
 			
-			socket.on('new message', msg => {
+			socket.on('new_message', msg => {
 				chat.addMessage(msg);
 			});
 
-			socket.on('new user', msg => {
+			socket.on('new_user', msg => {
 				chat.addMessage(msg);
 			});
 
@@ -58,7 +58,10 @@ const createNode = h.createNode;
 	const hangmanSocket = {
 		init: function() {
 			// Get the word from the server and set it in the client
-			socket.on('set word', (word, hiddenWord) => {
+			socket.on('set_word', (word, hiddenWord) => {
+
+				console.log(word, hiddenWord);
+				
 				const wordCon = $('#word');
 				
 				// Remove current nodes for now to update
@@ -75,7 +78,7 @@ const createNode = h.createNode;
 		},
 		handleGuess: function(guess) {
 			if (guess.correct) {
-				chat.addMessage(guess.result);
+				// chat.addMessage(guess.result);
 			} else {
 				chat.addMessage(guess.result);
 			}

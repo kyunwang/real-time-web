@@ -15,23 +15,23 @@ const hangmanLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 
 const hangmanWord = 'wonderfull';
 // Create a array for the hangman game
-const wordUnderscores = hangmanWord.split('').map(letter => '_');
+let wordUnderscores = hangmanWord.split('').map(letter => '_');
 
 
 const io = require('socket.io').listen(server);
 
 io.on('connection', function (socket) {
-	io.emit('new user', 'type `/hangman letter` to guess a letter. type `/hangman word myword` to guess a word');
+	io.emit('new_user', 'type `/hangman letter` to guess a letter. type `/hangman word myword` to guess a word');
 
 	// Happens if the user leaves the chat / or disconnects
 	socket.on('disconnect', function () {
 		console.log('user disconnected');
 	});
 
-	// When a user posts a new message
-	socket.on('new message', checkHangman);
+	// When a user posts a new_message
+	socket.on('new_message', checkHangman);
 
-	socket.on('get word', setWord);
+	socket.on('set_word', setWord);
 });
 
 
@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
 function checkHangman(msg) {
 	if (msg.startsWith('/hangman', 0)) return checkType(msg);
 	
-	io.emit('new message', msg);
+	io.emit('new_message', msg);
 }
 
 
@@ -75,7 +75,7 @@ function checkType(msg) {
 
 
 function setWord() {
-	io.emit('set word', hangmanWord, wordUnderscores);
+	io.emit('set_word', hangmanWord, wordUnderscores);
 }
 
 function checkLetter(letter) {
@@ -84,7 +84,7 @@ function checkLetter(letter) {
 	if (letterIndexes.length) {
 		letterIndexes.forEach(index => wordUnderscores[index] = letter);
 
-
+		// Update the letters
 		setWord();
 
 		return {
@@ -100,7 +100,10 @@ function checkLetter(letter) {
 
 function checkWord(word) {
 	if (hangmanWord === word) {
-		console.log('found word');
+		wordUnderscores = word.split('');
+
+		setWord();
+
 		return {
 			correct: true,
 			result: word
