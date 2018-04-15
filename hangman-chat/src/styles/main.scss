@@ -1,6 +1,6 @@
 :root {
-	--main-black: #3a3a3a;
 	--grey: #c0c0c0;
+	--light-grey: #efefef;
 
 	--white: #fefefe;
 	--black: #3a3a3a;
@@ -16,22 +16,6 @@
 
 body {
 	 font-family: Helvetica, Arial;
-	 color: var(--main-black);
-}
-
-
-#messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#messages li {
-    padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) {
-    background: #eee;
 }
 
 /*==========================
@@ -133,8 +117,35 @@ main {
 	ul {
 		flex: 1;
 		overflow-y: scroll;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	li {
+		display: block;
+		max-width: 80%;
+		word-wrap: break-word;
+		margin: .6em 1em 0 1em;
+		border-radius: 1em;
+		padding: .5rem 1rem;
+	}
+
+	.room__message {
+		max-width: 80%;
+		background: rgb(29, 127, 247);
+		color: var(--white);
+		border-radius: 1em;
+	}
+	
+	.room__message--own {
+		max-width: 80%;
+		background: var(--light-grey);
+		color: var(--black);
+		margin-left: auto;
 	}
 }
+
 
 .chat--form {
 	display: block;

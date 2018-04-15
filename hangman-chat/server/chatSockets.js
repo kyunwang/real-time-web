@@ -56,15 +56,13 @@ io.on('connection', function (socket) {
 	===========================*/
 
 	function checkHangman(msg) {
-		console.log('before');
-		
 		if (msg.toLowerCase().startsWith('/hangman', 0)) return checkType(msg);
-		console.log('after');
 		
 		// io.emit('new_message', msg);
 		socket.broadcast.emit('new_message', {
 			username: socket.self,
-			msg
+			msg,
+			className: 'room__message'
 		});
 	}
 

@@ -21,7 +21,7 @@ const createNode = h.createNode;
 				if (message.value.toLowerCase().startsWith('/hangman', 0)) return;
 
 				// Set own message
-				chat.addMessage({ username: 'me', msg: message.value });
+				chat.addMessage({ username: 'me', msg: message.value, className:'room__message--own' });
 				
 				message.value = '';
 
@@ -56,8 +56,9 @@ const createNode = h.createNode;
 		},
 		addMessage: function (data) {
 			// Append the new_message to the view
+			
 			$('#messages')
-				.appendChild(createNode('li', `${data.username}: ${data.msg}`));
+				.appendChild(createNode('li', `${data.username}: ${data.msg}`, data.className));
 		},
 		userEntered: function(name) {
 			console.log('New user ', name);

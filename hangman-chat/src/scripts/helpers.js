@@ -6,10 +6,17 @@ exports.$$ = function(element) {
 	return document.querySelectorAll(element);
 };
 
-exports.createNode = function (element = 'li', text = '') {
+exports.createNode = function (element = 'li', text = '', className) {
 	const node = document.createElement(element);
 	const textNode = document.createTextNode(text);
 	node.appendChild(textNode);
+
+	console.log(className);
+	
+	if (className) {
+		node.classList.add(className);
+	}
+
 	return node;
 }
 
