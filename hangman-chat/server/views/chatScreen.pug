@@ -3,6 +3,15 @@ include mixins/_hangmanWords
 include mixins/_letterBoard
 
 block content
+	
+	div.modal
+		form(action="" class="form--modal")
+			h2 Hangman chat
+			label(for="username") What should we call you?
+			fieldset
+				input(id="username" type="text")
+				input(type="submit" value="👉")
+
 	main
 		section
 			+letterBoard()
@@ -11,9 +20,9 @@ block content
 		section
 			ul#messages
 
-			form(id="chat-form", action="")
-				input(id="m", autocomplete="on")
-				button Send
+			form(id="chat-form" class="chat--form" action="")
+				input(id="m" type="text" autocomplete="on")
+				input(type="submit" value="👉")
 
-	script(type="text/javascript", src="/socket.io/socket.io.js")
-	script(type="text/javascript", src="/scripts/bundle.js")
+	script(type="text/javascript" src="/socket.io/socket.io.js")
+	script(type="text/javascript" src="/scripts/bundle.js")

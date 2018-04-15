@@ -4,8 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon --exec babel-node ./server/index.js",
-		"watch": "npm run watch:css & npm run watch:js & npm start",
+		"start": "node ./dist/index.js",
+		"dev": "nodemon --exec babel-node ./server/index.js",
+		"watch": "npm run watch:css & npm run watch:js & npm run dev",
 		"watch:css": "node-sass --watch src/styles --output public/",
 		"watch:js": "watchify src/scripts/index.js --outfile public/scripts/bundle.js",
 		"build": "browserify src/scripts/index.js > dist/bundle.js && uglifyjs dist/bundle.js --compress --output dist/bundle.js",
