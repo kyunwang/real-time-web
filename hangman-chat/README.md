@@ -12,21 +12,22 @@ A simple chat with hangman where you can play hangman in with others.
 # Getting started
 Change the branch to hangman ;)
 Here is how to get started:
-1. Download or clone the repo `git clone https://github.com/kyunwang/hangman-chat.git`
-2. Run `npm install` or `yarn`
-3. Do a `npm start`
-4. Go to **localhost:3100** and you are ready to go.
+1. Clone the repo `git clone https://github.com/kyunwang/real-time-web.git` or download it.
+2. Navigate to the hangman folder `cd hangman-chat`
+3. Run `npm install` or `yarn`
+4. Do a `npm start`
+5. Go to [localhost:3100](localhost:3100) and you are ready to go.
 
 # Features
-* socket.io is being used to make the app realtime.  
-You can now use the app to talk with each other and send messages.  
-In this case to play hangman!
-
-* Using pug as templating render engine to communicate with the browser.
+This app contains the following features:
+- You can chat in a, currently, anonymous, chatroom.
+- You can play hangman with other in the chatroom
+	- You can guess with a letter by typing `/hangman <Your letter>`
+	- You can guess the word by typing `/hangman word <Your word>`
 
 # Whats used
-* [Socket.io](https://socket.io/)
-* [Pug](https://pugjs.org/api/getting-started.html)
+- [Socket.io](https://socket.io/)
+- [Pug](https://pugjs.org/api/getting-started.html)
 
 # To Do
-* Finishing the app, making the game real like hangman.
+- [ ] Finishing the app, making the game real like hangman.
