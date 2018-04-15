@@ -5,7 +5,7 @@
 	--white: #fefefe;
 	--black: #3a3a3a;
 	--fbg-color: #fff;
-	--bg-color: #0F31C9;
+	--primary-color: #0F31C9;
 }
 
 * {
@@ -15,7 +15,7 @@
 }
 
 body {
-	 font: 13px Helvetica, Arial;
+	 font-family: Helvetica, Arial;
 	 color: var(--main-black);
 }
 
@@ -41,7 +41,7 @@ body {
 html,
 body {
 	display: flex;
-	background-color: var(--bg-color);
+	background-color: var(--primary-color);
 	height: 100%;
 	position: relative;
 	padding: .6rem;
@@ -53,6 +53,28 @@ body {
 	}
 }
 
+[type="submit"] {
+	height: 3em;
+	min-width: 3em;
+	width: 15%;
+	background: var(--primary-color);
+	color: var(--white);
+
+	border: none;
+	border-radius: 3px;
+}
+
+[type="text"] {
+	width: 80%;
+	margin-right: .5%;
+	border: 0;
+	border-bottom: 2px solid var(--grey);
+	padding: 10px;
+
+	+[type="submit"] {
+		margin-left: 1em;
+	}
+}
 
 
 /*==========================
@@ -74,7 +96,7 @@ body {
 .word--con {
 	position: relative;
 	flex: 1;
-	font-size: 3em;
+	font-size: 1.6em;
 	text-align: center;
 
 	span {
@@ -84,7 +106,7 @@ body {
 }
 
 .letter--con {
-	font-size: 1.5em;
+	font-size: 1.2em;
 	font-weight: 900;
 	text-transform: uppercase;
 	
@@ -102,9 +124,6 @@ body {
 main {
 	display: flex;
 	flex-direction: column; 
-	form {
-		margin-top: auto;
-	}
 }
 
 .message--con {
@@ -115,6 +134,26 @@ main {
 		flex: 1;
 		overflow-y: scroll;
 	}
+}
+
+.chat--form {
+	display: block;
+	margin: .4rem;
+
+	[type="text"] {
+		margin-right: auto;
+	}
+	
+	[type="submit"] {
+	}
+}
+
+/*==========================
+=== Modal - username
+===========================*/
+
+fieldset {
+	border: none;
 }
 
 .modal {
@@ -152,32 +191,5 @@ main {
 	label {
 		margin-bottom: 1em
 	}
-
-	[type="text"] {
-		border-bottom: 2px solid var(--black);
-	}
 }
 
-.chat--form {
-
-}
-
-fieldset {
-	border: none;
-}
-
-[type="submit"] {
-	height: 3em;
-	width: 3em;
-	background: rgb(130, 224, 255);
-	border: none;
-	border-radius: 1.5em;
-}
-
-[type="text"] {
-	flex: 1;
-	border: 0;
-	padding: 10px;
-	// width: 90%;
-	margin-right: .5%;
-}

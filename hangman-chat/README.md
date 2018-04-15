@@ -20,7 +20,8 @@ Here is how to get started:
 
 # Features
 This app contains the following features:
-- You can chat in a, currently, anonymous, chatroom.
+- You can chat in a chatroom.
+- You can set a temporary username for the chatroom
 - You can play hangman with other in the chatroom
 	- You can guess with a letter by typing `/hangman <Your letter>`
 	- You can guess the word by typing `/hangman word <Your word>`
