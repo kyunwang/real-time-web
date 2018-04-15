@@ -16,10 +16,10 @@ const io = require('socket.io').listen(server);
 
 
 io.on('connection', function (socket) {
-	io.emit('new_user', {
-		username: 'SYSTEM',
-		msg: 'type `/hangman <letter>` to guess a letter. type `/hangman word <your word>` to guess a word'
-	});
+	// io.emit('new_user', {
+	// 	username: 'SYSTEM',
+	// 	msg: 'type `/hangman <letter>` to guess a letter. type `/hangman word <your word>` to guess a word'
+	// });
 
 	// Happens if the user leaves the chat / or disconnects
 	socket.on('disconnect', function () {
@@ -47,6 +47,7 @@ io.on('connection', function (socket) {
 		console.log('before');
 		
 		if (msg.toLowerCase().startsWith('/hangman', 0)) return checkType(msg);
+		console.log('after');
 		
 		// io.emit('new_message', msg);
 		socket.broadcast.emit('new_message', {
@@ -67,12 +68,19 @@ io.on('connection', function (socket) {
 				const word = message[2];
 				const result = checkWord(word);
 
-				return io.emit('guess_word', result);
+				// return io.emit('guess_word', result);
+				return socket.broadcast.emit('guess_word', {
+					username: 'SYSTEM',
+					guess: result
+				});
 			} else {
 				const letter = message[1][0];
 				const result = checkLetter(letter);
 
-				return io.emit('guess_letter', result);
+				return socket.broadcast.emit('guess_letter', {
+					username: 'SYSTEM',
+					guess: result
+				});
 			}
 		}
 
@@ -110,13 +118,13 @@ io.on('connection', function (socket) {
 
 			return {
 				correct: true,
-				result: letter
+				result: `${socket.self} guessed the letter ${letter}. The letter ${letter} is in the word.`
 			};
 		}
 
 		return {
 			correct: false,
-			result: `There is no letter: ${letter} in the word.`
+			result: `${socket.self} guessed the letter ${letter}. There is no letter ${letter} in the word.`
 		};
 	}
 
@@ -129,12 +137,12 @@ io.on('connection', function (socket) {
 
 			return {
 				correct: true,
-				result: word
+				result: `Congratulations ${socket.self} guessed the correct word: ${word}`
 			};
 		}
 		return {
 			correct: false,
-			result: `Your guess of: ${word} is not correct.`,
+			result: `${socket.self} guessed of the word: ${word}`,
 		}
 	}
 

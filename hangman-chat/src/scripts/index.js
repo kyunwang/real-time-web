@@ -12,15 +12,19 @@ const createNode = h.createNode;
 
 			// Add a submit event to the submit button
 			$('#chat-form').addEventListener('submit', evt => {
+				// Prevent default first 
+				evt.preventDefault();
 				const message = $('#message');
+				
 				socket.emit('new_message', message.value);
 				
+				if (message.value.toLowerCase().startsWith('/hangman', 0)) return;
+
 				// Set own message
 				chat.addMessage({ username: 'me', msg: message.value });
 				
 				message.value = '';
-				
-				evt.preventDefault();
+
 				return false;
 			});
 
@@ -31,6 +35,11 @@ const createNode = h.createNode;
 					evt.preventDefault();
 					return;
 				}
+
+				chat.addMessage({
+					username: 'SYSTEM',
+					msg: 'type `/hangman <letter>` to guess a letter. type `/hangman word <your word>` to guess a word'
+				});
 
 				$('#modal').classList.remove('modal--active');
 
@@ -115,11 +124,16 @@ const createNode = h.createNode;
 				letterCon.appendChild(space);
 			});
 		},
-		handleGuess: function(guess) {
-			if (guess.correct) {
+		handleGuess: function(data) {
+			console.log(data);
+			
+			if (data.guess.correct) {
 				// chat.addMessage(guess.result);
 			} else {
-				chat.addMessage(guess.result);
+				chat.addMessage({
+					username: data.username,
+					msg: data.guess.result
+				});
 			}
 		}
 
