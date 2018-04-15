@@ -48,8 +48,9 @@ You will enter the *hangman* mode by typing `/hangman` and a letter or `word` th
 
 | **Command** | **Note** | **Example** |
 | :---------: | ----------- | ----------- |
-|      /hangman `letter`      |   You will guess a letter with this command. If you input a word, only the first letter wll be taken       | /hangman l |
-|      /hangman word `word`      |    You use this command if you want to guess a word.    | /hangman word conference |
+|      /hangman `letter`      |   You will guess a letter with this command.
+If you input a word, only the first letter wll be taken       | /hangman `l` |
+|      /hangman word `word`      |    You use this command if you want to guess a word.    | /hangman word `conference` |
 
 # To Do
 - [x] Finishing the app, making the game real like hangman.
