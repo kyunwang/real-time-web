@@ -14,22 +14,34 @@ let wordUnderscores = hangmanWord.split('').map(letter => '_');
 
 const io = require('socket.io').listen(server);
 
+// Setup for dynamic words
+const hangmanConfig = {
+	lives: 10,
+	word: 'wonderful', // Default word
+	alphabet: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+	'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+	't', 'u', 'v', 'w', 'x', 'y', 'z'],
+	underscores: ['_']
+}
 
 io.on('connection', function (socket) {
-	// io.emit('new_user', {
-	// 	username: 'SYSTEM',
-	// 	msg: 'type `/hangman <letter>` to guess a letter. type `/hangman word <your word>` to guess a word'
-	// });
-
 	// Happens if the user leaves the chat / or disconnects
 	socket.on('disconnect', function () {
 		console.log('user disconnected');
+		socket.broadcast.emit('user_left', {
+			username: 'SYSTEM',
+			msg: `${socket.self} has left the game.`
+		});
 	});
 
 	socket.on('set_self', function addSelf(username) {
 		socket.self = username;
 
-		io.emit('set_self', socket.self, socket.id);
+		// io.emit('set_self', socket.self, socket.id);
+		socket.broadcast.emit('new_user', {
+			username: 'SYSTEM',
+			msg: `${username} has joined the game.`
+		});
 	})
 
 	// When a user posts a new_message
@@ -93,6 +105,9 @@ io.on('connection', function (socket) {
 
 
 	function setWord() {
+
+
+
 		io.emit('set_word', wordUnderscores);
 	}
 
@@ -105,7 +120,11 @@ io.on('connection', function (socket) {
 		const letterIndexes = h.searchLetter(hangmanWord, letter);
 		// const alphabetIndex = h.searchLetter(hangmanAlphabet, letter);
 		const alphabetIndex = hangmanAlphabet.indexOf(letter);
-		hangmanAlphabet.splice(alphabetIndex, 1);
+		console.log(alphabetIndex);
+		
+		if (alphabetIndex > -1) {
+			hangmanAlphabet.splice(alphabetIndex, 1);
+		}
 
 		// Update the letterboard
 		setLetterBoard();

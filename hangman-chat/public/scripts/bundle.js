@@ -103,6 +103,8 @@ const createNode = h.createNode;
 			socket.on('set_self', chat.userEntered);
 
 			socket.on('new_user', chat.addMessage);
+
+			socket.on('user_left', chat.addMessage);
 			
 			socket.on('new_message', chat.addMessage);
 
