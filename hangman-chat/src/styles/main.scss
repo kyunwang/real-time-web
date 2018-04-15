@@ -101,23 +101,28 @@ body {
 
 main {
 	display: flex;
-	flex-direction: column;
+	flex-direction: column; 
 	form {
-		 background: #000;
-		 padding: 3px;
-		 position: absolute;
-		 bottom: 0;
-		 width: 100%;
+		margin-top: auto;
 	}
-	
 }
 
-form {
+.message--con {
 	display: flex;
-
+	flex-direction: column;
+	flex: 1;
+	ul {
+		flex: 1;
+		overflow-y: scroll;
+	}
 }
 
 .modal {
+	display: none;
+}
+
+.modal--active {
+	display: block;
 	&::before {
 		content: ""; 
 		//  display: none;

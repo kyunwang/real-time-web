@@ -38,22 +38,47 @@ const createNode = h.createNode;
 
 			// Add a submit event to the submit button
 			$('#chat-form').addEventListener('submit', evt => {
-				socket.emit('new_message', $('#m').value);
+				const message = $('#message');
+				socket.emit('new_message', message.value);
 				
-				$('#m').value = '';
+				// Set own message
+				chat.addMessage({ username: 'me', msg: message.value });
+				
+				message.value = '';
+				
 				evt.preventDefault();
 				return false;
 			});
 
+			// Set username
+			$('#form-modal').addEventListener('submit', evt => {
+				const username = $('#input-username');
+				if (!username.value) {
+					evt.preventDefault();
+					return;
+				}
+
+				$('#modal').classList.remove('modal--active');
+
+				socket.emit('set_self', username.value);
+
+				username.value = '';
+
+				$('#message').focus();
+				evt.preventDefault();
+				return false;
+			})
+
 			chatSockets.init();
 		},
-		addMessage: function (msg) {
+		addMessage: function (data) {
 			// Append the new_message to the view
 			$('#messages')
-				.appendChild(createNode('li', msg));
+				.appendChild(createNode('li', `${data.username}: ${data.msg}`));
 		},
-		userEntered: function() {
-
+		userEntered: function(name) {
+			console.log('New user ', name);
+			
 		}
 	}
 
@@ -66,9 +91,11 @@ const createNode = h.createNode;
 			socket.emit('set_word');
 			socket.emit('set_letter_board');
 			
-			socket.on('new_message', chat.addMessage);
+			socket.on('set_self', chat.userEntered);
 
 			socket.on('new_user', chat.addMessage);
+			
+			socket.on('new_message', chat.addMessage);
 
 			socket.on('guess_letter', hangmanSocket.handleGuess);
 			

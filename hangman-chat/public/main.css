@@ -81,24 +81,30 @@ main {
   display: flex;
   flex-direction: column; }
   main form {
-    background: #000;
-    padding: 3px;
-    position: absolute;
+    margin-top: auto; }
+
+.message--con {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+  .message--con ul {
+    flex: 1;
+    overflow-y: scroll; }
+
+.modal {
+  display: none; }
+
+.modal--active {
+  display: block; }
+  .modal--active::before {
+    content: "";
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 100%; }
-
-form {
-  display: flex; }
-
-.modal::before {
-  content: "";
-  background: rgba(0, 0, 0, 0.6);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10; }
+    z-index: 10; }
 
 .form--modal {
   flex-direction: column;
