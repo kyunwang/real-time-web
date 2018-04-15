@@ -2,6 +2,7 @@
   --grey: #c0c0c0;
   --light-grey: #efefef;
   --white: #fefefe;
+  --blue: rgb(29, 127, 247);
   --black: #3a3a3a;
   --fbg-color: #fff;
   --primary-color: #0F31C9; }
@@ -35,7 +36,7 @@ body {
   height: 3em;
   min-width: 3em;
   width: 15%;
-  background: var(--primary-color);
+  background: var(--blue);
   color: var(--white);
   border: none;
   border-radius: 3px; }
@@ -106,7 +107,7 @@ main {
     padding: .5rem 1rem; }
   .message--con .room__message {
     max-width: 80%;
-    background: #1d7ff7;
+    background: var(--blue);
     color: var(--white);
     border-radius: 1em; }
   .message--con .room__message--own {

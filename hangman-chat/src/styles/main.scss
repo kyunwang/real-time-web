@@ -3,6 +3,7 @@
 	--light-grey: #efefef;
 
 	--white: #fefefe;
+	--blue: rgb(29, 127, 247);
 	--black: #3a3a3a;
 	--fbg-color: #fff;
 	--primary-color: #0F31C9;
@@ -41,7 +42,7 @@ body {
 	height: 3em;
 	min-width: 3em;
 	width: 15%;
-	background: var(--primary-color);
+	background: var(--blue);
 	color: var(--white);
 
 	border: none;
@@ -133,7 +134,7 @@ main {
 
 	.room__message {
 		max-width: 80%;
-		background: rgb(29, 127, 247);
+		background: var(--blue);
 		color: var(--white);
 		border-radius: 1em;
 	}

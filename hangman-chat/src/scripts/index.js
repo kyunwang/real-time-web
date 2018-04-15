@@ -18,13 +18,13 @@ const createNode = h.createNode;
 				
 				socket.emit('new_message', message.value);
 				
-				if (message.value.toLowerCase().startsWith('/hangman', 0)) return;
-
-				// Set own message
-				chat.addMessage({ username: 'me', msg: message.value, className:'room__message--own' });
+				if (!message.value.toLowerCase().startsWith('/hangman', 0)) {
+					// Set own message
+					chat.addMessage({ username: 'me', msg: message.value, className:'room__message--own' });
+				}
 				
 				message.value = '';
-
+				
 				return false;
 			});
 
